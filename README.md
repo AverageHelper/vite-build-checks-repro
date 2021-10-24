@@ -33,7 +33,7 @@ We use the `Thing` interface in [src/components/HelloWorld.vue](src/components/H
 
 The build completes without apparent issue. TypeErrors may throw at runtime, because the errors have not been caught by the CLI.
 
-### Why This Matters
+## Why This Matters
 
 Evan You [suggests](https://github.com/vitejs/vite/issues/2539#issuecomment-800291208) that developers should lean on their IDE to report type checks. This is all well and good when working with types that are defined and used in the same file. However, in a production environment, there are likely to be dozens of moving parts, many of which are abstracted into their own modules for ease of maintenance.
 
