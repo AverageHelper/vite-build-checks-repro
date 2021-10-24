@@ -35,7 +35,7 @@ The build completes without apparent issue. TypeErrors may throw at runtime, bec
 
 ### Why This Matters
 
-Evan You suggests that developers should lean on their IDE to report type checks. This is all well and good when working with types that are defined and used in the same file. However, in a production environment, there are likely to be dozens of moving parts, many of which are abstracted into their own modules for ease of maintenance.
+Evan You [suggests](https://github.com/vitejs/vite/issues/2539#issuecomment-800291208) that developers should lean on their IDE to report type checks. This is all well and good when working with types that are defined and used in the same file. However, in a production environment, there are likely to be dozens of moving parts, many of which are abstracted into their own modules for ease of maintenance.
 
 Consider this repository, where a developer has modified the `Thing` interface in [src/@types/global.d.ts](src/@types/global.d.ts) to add a `note` property. The `HelloWorld` component creates an object that implements the `Thing` interface, but has not been updated to reflect the new interface. In fact, when that file is closed, VSCode reports no errors from that file. My team expects the CI/CD pipeline, especially `vue-tsc` to report the error before this broken code hits production.
 
