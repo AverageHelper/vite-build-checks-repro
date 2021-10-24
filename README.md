@@ -1,14 +1,8 @@
-# Vue 3 + TypeScript + Vite + _Sprinkles_
+# Vite Build Process Error
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+This repository is designed to reproduce an issue where `vue-tsc` would fail to catch TypeScript type errors at build time.
 
-## Fancy
-
-- Semantic colors for dark mode support. (Remember to use the `color()` function in your SCSS)
-- Strong TypeScript and ESLint checks for excellent type safety.
-- Tabs instead of spaces everywhere for maximum accessibility and indentation choice.
-- A version.ts file to get the project version at runtime without having to read package.json. (Run `npm run build` or `npm run export-version` to generate this)
-- Support for Jest unit tests. (Create a .test.ts file next to a source file you want to test)
+[Vite's documentation](https://vitejs.dev/guide/features.html#typescript) states that "\[Vite\] assumes type checking is taken care of by your IDE and build process", then explains that one can "install `vue-tsc` and run `vue-tsc --noEmit` to also type check your \*.vue files". This appears to not be the case.
 
 ## Recommended IDE Setup
 
@@ -19,6 +13,16 @@ $ npm install
 $ npm start
 ```
 
-## Type Support For `.vue` Imports in TS
+## The Issue
 
-Since TypeScript cannot handle type information for `.vue` imports, they are shimmed to be a generic Vue component type by default. In most cases this is fine if you don't really care about component prop types outside of templates. However, if you wish to get actual prop types in `.vue` imports (for example to get props validation when using manual `h(...)` calls), you can enable Volar's `.vue` type support plugin by running `Volar: Switch TS Plugin on/off` from VSCode command palette.
+```sh
+$ vue-tsc --noEmit && vite build
+```
+
+### Expected Behavior
+
+The above command should finish with a nonzero exit code due to a TypeScript compiler error.
+
+### Actual Behavior
+
+The build completes without apparent issue. TypeErrors may throw at runtime, because the errors have not been caught by the CLI.

@@ -21,7 +21,7 @@
 		"esModuleInterop": true,
 		"skipLibCheck": true,
 		"forceConsistentCasingInFileNames": true,
-		"typeRoots": ["./node_modules/@types", "./src"],
-		"types": ["node"]
+		"types": [],
+		"typeRoots": ["./node_modules/@types", "./src"]
 	}
 }

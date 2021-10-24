@@ -102,7 +102,7 @@
 			}
 		},
 		{
-			"files": ["src/**/*.test.ts", "tests/**/*.ts", "**/__mocks__/**/*.ts"],
+			"files": ["./*.ts", "src/**/*.test.ts", "tests/**/*.ts", "**/__mocks__/**/*.ts"],
 			"extends": ["plugin:prettier/recommended"],
 			"plugins": ["prettier", "@typescript-eslint"],
 			"parser": "@typescript-eslint/parser",
