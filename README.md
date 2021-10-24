@@ -15,6 +15,8 @@ $ npm start
 
 ## The Issue
 
+Run the following command:
+
 ```sh
 $ vue-tsc --noEmit && vite build
 ```
@@ -23,6 +25,18 @@ $ vue-tsc --noEmit && vite build
 
 The above command should finish with a nonzero exit code due to a TypeScript compiler error.
 
+We have defined a `Thing` interface in [src/@types/global.d.ts](src/@types/global.d.ts).
+
+We use the `Thing` interface in [src/components/HelloWorld.vue](src/components/HelloWorld.vue) to annotate the type of a computed property that defines an object literal. VSCode reports this error inline, but `vue-tsc` does not seem to notice the error at all.
+
 ### Actual Behavior
 
 The build completes without apparent issue. TypeErrors may throw at runtime, because the errors have not been caught by the CLI.
+
+### Why This Matters
+
+Evan You suggests that developers should lean on their IDE to report type checks. This is all well and good when working with types that are defined and used in the same file. However, in a production environment, there are likely to be dozens of moving parts, many of which are abstracted into their own modules for ease of maintenance.
+
+Consider this repository, where a developer has modified the `Thing` interface in [src/@types/global.d.ts](src/@types/global.d.ts) to add a `note` property. The `HelloWorld` component creates an object that implements the `Thing` interface, but has not been updated to reflect the new interface. In fact, when that file is closed, VSCode reports no errors from that file. My team expects the CI/CD pipeline, especially `vue-tsc` to report the error before this broken code hits production.
+
+I cannot expect nor trust my team to open every file in a large project just so that VSCode can report errors inline. We must have these errors exposed in CI/CD.
